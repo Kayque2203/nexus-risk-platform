@@ -5,6 +5,25 @@ Plataforma inteligente de gestão de processos e riscos corporativos, com cálcu
 
 > Projeto de portfólio construído do zero, incluindo diagnóstico de ambiente restrito, arquitetura adaptativa, backend, frontend e testes automatizados.
 
+## 📸 Screenshots
+
+<table>
+  <tr>
+    <td><strong>Login</strong></td>
+    <td><strong>Dashboard</strong></td>
+  </tr>
+  <tr>
+    <td><img src="docs/screenshots/login.png" width="400"/></td>
+    <td><img src="docs/screenshots/dashboard.png" width="400"/></td>
+  </tr>
+  <tr>
+    <td colspan="2" align="center"><strong>Gestão de riscos com severidade calculada automaticamente</strong></td>
+  </tr>
+  <tr>
+    <td colspan="2"><img src="docs/screenshots/riscos.png" width="820"/></td>
+  </tr>
+</table>
+
 ## 🎯 Problema
 
 Ambientes corporativos lidam constantemente com processos operacionais e os riscos associados a eles — prazos, responsáveis, prioridades, e a necessidade de identificar rapidamente onde estão as maiores ameaças. Sem uma ferramenta centralizada, essa informação fica dispersa em planilhas, sem cálculo consistente de severidade e sem rastreabilidade de quem alterou o quê.
@@ -133,7 +152,9 @@ nexus/
 
 └── docs/
 
-└── ARCHITECTURE.md
+├── ARCHITECTURE.md
+
+└── screenshots/
 
 
 ## 🚀 Como executar
