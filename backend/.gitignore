@@ -1,0 +1,10 @@
+﻿venv/
+__pycache__/
+*.pyc
+.env
+nexus.db
+test.db
+*.db
+.pytest_cache/
+.coverage
+htmlcov/
