@@ -89,6 +89,15 @@ Este projeto foi desenvolvido em um **ambiente corporativo com restrições reai
 - CRUD completo de Riscos, vinculados a processos
 - **Risk Engine**: cálculo automático de severidade via matriz Probabilidade × Impacto (baseada em princípios da ISO 31000)
 - Recálculo automático de severidade ao atualizar probabilidade/impacto
+- **AI Risk Analyzer**: análise de texto livre para sugestão automática de categoria, probabilidade, impacto e severidade — arquitetura desacoplada de qualquer API externa de IA, com fallback seguro
+- Dashboard com indicadores (processos ativos, atrasados, riscos críticos) e badges visuais de severidade
+- Trilha de auditoria (quem, quando, o quê mudou) para toda ação de escrita
+- 36 testes automatizados (unitários e de integraçã
+- Autenticação JWT com hash de senha (bcrypt)
+- CRUD completo de Processos (nome, categoria, departamento, status, prioridade, prazo)
+- CRUD completo de Riscos, vinculados a processos
+- **Risk Engine**: cálculo automático de severidade via matriz Probabilidade × Impacto (baseada em princípios da ISO 31000)
+- Recálculo automático de severidade ao atualizar probabilidade/impacto
 - Dashboard com indicadores (processos ativos, atrasados, riscos críticos) e badges visuais de severidade
 - Trilha de auditoria (quem, quando, o quê mudou) para toda ação de escrita
 - 29 testes automatizados (unitários e de integração)
@@ -212,24 +221,24 @@ python -m pytest -v
 
 Cobertura inclui: autenticação, CRUD de processos e riscos, validação de regras de negócio (e-mail duplicado, processo inexistente), e a matriz completa do Risk Engine testada via `@pytest.mark.parametrize`.
 
+Documentação completa e interativa em `/docs` (Swagger UI).
+
 ## 📋 API — principais endpoints
 
-| Método      | Endpoint                | Descrição                |
-| ------------ | ----------------------- | -------------------------- |
-| POST         | `/api/auth/login`     | Login (retorna JWT)        |
-| GET          | `/api/users/me`       | Usuário autenticado       |
-| GET/POST     | `/api/processes/`     | Listar/criar processos     |
-| PATCH/DELETE | `/api/processes/{id}` | Atualizar/excluir processo |
-| GET/POST     | `/api/risks/`         | Listar/criar riscos        |
-| PATCH/DELETE | `/api/risks/{id}`     | Atualizar/excluir risco    |
-| GET          | `/api/dashboard/`     | Indicadores agregados      |
-| GET          | `/api/audit-logs/`    | Trilha de auditoria        |
-
-Documentação completa e interativa em `/docs` (Swagger UI).
+| Método      | Endpoint                | Descrição                      |
+| ------------ | ----------------------- | -------------------------------- |
+| POST         | `/api/auth/login`     | Login (retorna JWT)              |
+| GET          | `/api/users/me`       | Usuário autenticado             |
+| GET/POST     | `/api/processes/`     | Listar/criar processos           |
+| PATCH/DELETE | `/api/processes/{id}` | Atualizar/excluir processo       |
+| GET/POST     | `/api/risks/`         | Listar/criar riscos              |
+| PATCH/DELETE | `/api/risks/{id}`     | Atualizar/excluir risco          |
+| GET          | `/api/dashboard/`     | Indicadores agregados            |
+| GET          | `/api/audit-logs/`    | Trilha de auditoria              |
+| POST         | `/api/ai/analyze`     | Análise de risco por texto (IA) |
 
 ## 🗺️ Roadmap
 
-- [ ] AI Service (análise semântica de texto para sugestão de categoria/severidade)
 - [ ] Detecção de anomalias (crescimento de ocorrências por categoria)
 - [ ] Copiloto conversacional sobre os dados
 - [ ] Automação via webhooks (Teams, Power Automate)

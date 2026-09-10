@@ -67,3 +67,15 @@ def auth_headers(client, test_user_data, registered_user):
     )
     token = response.json()["access_token"]
     return {"Authorization": f"Bearer {token}"}
+
+
+@pytest.fixture
+def db_session():
+    """Expõe uma sessão direta do banco de teste, útil para verificar
+    que registros foram persistidos corretamente (ex: logs de auditoria,
+    análises de IA), sem precisar de um endpoint GET dedicado só para isso."""
+    db = TestingSessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()

@@ -8,6 +8,7 @@ from app.api.v1.processes import router as processes_router
 from app.api.v1.risks import router as risks_router
 from app.api.v1.dashboard import router as dashboard_router
 from app.api.v1.audit import router as audit_router
+from app.api.v1.ai import router as ai_router
 
 app = FastAPI(
     title=settings.app_name,
@@ -29,6 +30,7 @@ app.include_router(processes_router)
 app.include_router(risks_router)
 app.include_router(dashboard_router)
 app.include_router(audit_router)
+app.include_router(ai_router)
 
 
 @app.get("/")
