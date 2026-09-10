@@ -1,5 +1,6 @@
-
 # NEXUS — Intelligent Process & Risk Platform
+
+![CI](https://github.com/Kayque2203/nexus-risk-platform/actions/workflows/ci.yml/badge.svg)
 
 Plataforma inteligente de gestão de processos e riscos corporativos, com cálculo automático de severidade, autenticação segura e trilha de auditoria completa.
 
@@ -104,8 +105,6 @@ Este projeto foi desenvolvido em um **ambiente corporativo com restrições reai
 
 ## 📦 Estrutura do projeto
 
-
-
 nexus/
 
 ├── backend/
@@ -155,7 +154,6 @@ nexus/
 ├── ARCHITECTURE.md
 
 └── screenshots/
-
 
 ## 🚀 Como executar
 
