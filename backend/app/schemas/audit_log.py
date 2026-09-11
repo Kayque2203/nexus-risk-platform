@@ -5,6 +5,7 @@ from pydantic import BaseModel, ConfigDict
 class AuditLogRead(BaseModel):
     id: str
     user_id: str | None = None
+    user_name: str | None = None
     entity_type: str
     entity_id: str
     action: str

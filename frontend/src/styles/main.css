@@ -471,3 +471,409 @@ a {
   width: auto;
   padding: 10px 20px;
 }
+
+
+/* ---------- Redesign: Sidebar + KPI cards refinados ---------- */
+
+.app-shell-v2 {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  min-height: 100vh;
+}
+
+.sidebar {
+  background: var(--color-panel-dark);
+  color: #EDEAE1;
+  padding: 24px 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+}
+
+.sidebar__brand {
+  font-family: var(--font-display);
+  font-size: 20px;
+  padding: 0 24px 24px;
+  border-bottom: 1px solid var(--color-line-dark);
+  margin-bottom: 16px;
+}
+
+.sidebar__nav {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 0 12px;
+}
+
+.sidebar__link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  border-radius: 6px;
+  color: #B7C3C7;
+  text-decoration: none;
+  font-size: 14px;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.sidebar__link:hover {
+  background: rgba(255, 255, 255, 0.06);
+  color: #EDEAE1;
+}
+
+.sidebar__link--active {
+  background: var(--color-brand);
+  color: #fff;
+}
+
+.sidebar__link svg {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+
+.sidebar__footer {
+  padding: 16px 24px 0;
+  border-top: 1px solid var(--color-line-dark);
+}
+
+.sidebar__user-name {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.sidebar__user-role {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: #7C8E93;
+  text-transform: lowercase;
+  margin-bottom: 12px;
+}
+
+.main-area {
+  background: var(--color-paper);
+}
+
+.top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 32px;
+  border-bottom: 1px solid var(--color-line);
+  background: #fff;
+}
+
+.top-bar__greeting {
+  font-size: 14px;
+  color: var(--color-ink-soft);
+}
+
+.top-bar__greeting strong {
+  color: var(--color-ink);
+}
+
+.main-content {
+  padding: 32px;
+  max-width: 1080px;
+}
+
+.main-content p.lead {
+  color: var(--color-ink-soft);
+  margin: 0 0 32px;
+  font-size: 14px;
+}
+
+/* KPI cards v2 -- com icone e area reservada para tendencia futura */
+
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+  margin-bottom: 40px;
+}
+
+.kpi-card {
+  border: 1px solid var(--color-line);
+  border-radius: 8px;
+  padding: 20px;
+  background: #fff;
+  box-shadow: 0 1px 2px rgba(27, 36, 48, 0.04);
+  transition: box-shadow 0.15s ease;
+}
+
+.kpi-card:hover {
+  box-shadow: 0 4px 12px rgba(27, 36, 48, 0.08);
+}
+
+.kpi-card__top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 12px;
+}
+
+.kpi-card__icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(44, 95, 111, 0.08);
+  color: var(--color-brand);
+}
+
+.kpi-card__icon svg {
+  width: 18px;
+  height: 18px;
+}
+
+.kpi-card--alert .kpi-card__icon {
+  background: rgba(166, 50, 58, 0.1);
+  color: var(--severity-critica);
+}
+
+.kpi-card__value {
+  font-family: var(--font-display);
+  font-size: 30px;
+  line-height: 1;
+  margin-bottom: 4px;
+}
+
+.kpi-card--alert .kpi-card__value {
+  color: var(--severity-critica);
+}
+
+.kpi-card__label {
+  font-size: 13px;
+  color: var(--color-ink-soft);
+}
+
+.kpi-card__trend {
+  font-size: 11px;
+  color: var(--color-ink-soft);
+  margin-top: 8px;
+  font-family: var(--font-mono);
+}
+
+
+/* ---------- AI Risk Analyzer ---------- */
+
+.ai-panel {
+  background: #fff;
+  border: 1px solid var(--color-line);
+  border-radius: 8px;
+  padding: 32px;
+  max-width: 720px;
+}
+
+.ai-panel textarea {
+  width: 100%;
+  min-height: 140px;
+  padding: 14px;
+  border: 1px solid var(--color-line);
+  border-radius: 6px;
+  font-size: 15px;
+  font-family: var(--font-sans);
+  resize: vertical;
+  margin-bottom: 16px;
+}
+
+.ai-panel textarea:focus {
+  outline: 2px solid var(--color-brand);
+  outline-offset: 1px;
+  border-color: var(--color-brand);
+}
+
+.btn-ai {
+  background: var(--color-brand);
+  color: #fff;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: var(--font-sans);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-ai:hover {
+  background: var(--color-brand-dark);
+}
+
+.btn-ai:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.btn-ai svg {
+  width: 16px;
+  height: 16px;
+}
+
+.ai-result {
+  margin-top: 32px;
+  padding-top: 32px;
+  border-top: 1px solid var(--color-line);
+  display: none;
+}
+
+.ai-result.visible {
+  display: block;
+}
+
+.ai-result__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.ai-result__category {
+  font-family: var(--font-display);
+  font-size: 20px;
+}
+
+/* Barra de 4 segmentos representando o nivel qualitativo
+   (baixa/media/alta/critica) -- sem inventar um numero que
+   o backend nao fornece, apenas visualizando o nivel real. */
+
+.level-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.level-row__label {
+  width: 110px;
+  font-size: 13px;
+  color: var(--color-ink-soft);
+  flex-shrink: 0;
+}
+
+.level-bar {
+  display: flex;
+  gap: 4px;
+  flex: 1;
+}
+
+.level-bar__segment {
+  height: 8px;
+  flex: 1;
+  border-radius: 2px;
+  background: var(--color-line);
+}
+
+.level-bar__segment--filled-baixa { background: var(--severity-baixa); }
+.level-bar__segment--filled-media { background: var(--severity-media); }
+.level-bar__segment--filled-alta { background: var(--severity-alta); }
+.level-bar__segment--filled-critica { background: var(--severity-critica); }
+
+.level-row__value {
+  width: 70px;
+  text-align: right;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  flex-shrink: 0;
+}
+
+.ai-result__severity-badge {
+  margin-top: 8px;
+  margin-bottom: 24px;
+}
+
+.ai-result__box {
+  background: var(--color-paper);
+  border-radius: 6px;
+  padding: 16px;
+  margin-bottom: 12px;
+}
+
+.ai-result__box-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--color-ink-soft);
+  margin-bottom: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.ai-result__box-text {
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+
+/* ---------- Auditoria ---------- */
+
+.audit-timeline {
+  max-width: 720px;
+}
+
+.audit-entry {
+  display: flex;
+  gap: 16px;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--color-line);
+}
+
+.audit-entry__icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--color-paper);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: var(--color-brand);
+}
+
+.audit-entry__icon--create { color: var(--severity-baixa); }
+.audit-entry__icon--update { color: var(--color-brand); }
+.audit-entry__icon--delete { color: var(--color-error); }
+
+.audit-entry__icon svg {
+  width: 16px;
+  height: 16px;
+}
+
+.audit-entry__content {
+  flex: 1;
+}
+
+.audit-entry__title {
+  font-size: 14px;
+  margin-bottom: 4px;
+}
+
+.audit-entry__title strong {
+  font-weight: 600;
+}
+
+.audit-entry__changes {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--color-ink-soft);
+  background: var(--color-paper);
+  padding: 6px 10px;
+  border-radius: 4px;
+  display: inline-block;
+  margin-top: 4px;
+}
+
+.audit-entry__meta {
+  font-size: 12px;
+  color: var(--color-ink-soft);
+  margin-top: 6px;
+}

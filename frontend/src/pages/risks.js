@@ -1,12 +1,14 @@
 ﻿import { getToken, clearToken, getCurrentUser, listRisks, createRisk, updateRisk, deleteRisk, listAllProcessesForSelect } from "../api/client.js";
+import { renderSidebar } from "./sidebar.js";
 
 if (!getToken()) {
   window.location.href = "index.html";
 }
 
+document.getElementById("sidebar-container").innerHTML = renderSidebar("risks");
+
 const userNameEl = document.getElementById("user-name");
 const userRoleEl = document.getElementById("user-role");
-const logoutBtn = document.getElementById("logout-btn");
 const tableBody = document.getElementById("risks-table-body");
 const formPanel = document.getElementById("risk-form-panel");
 const form = document.getElementById("risk-form");
@@ -158,7 +160,7 @@ newBtn.addEventListener("click", async () => {
 
 cancelBtn.addEventListener("click", closeForm);
 
-logoutBtn.addEventListener("click", () => {
+document.getElementById("logout-btn").addEventListener("click", () => {
   clearToken();
   window.location.href = "index.html";
 });

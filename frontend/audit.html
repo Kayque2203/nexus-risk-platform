@@ -1,0 +1,33 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NEXUS — Auditoria</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Serif:wght@500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="src/styles/main.css" />
+</head>
+<body>
+  <div class="app-shell-v2">
+    <div id="sidebar-container"></div>
+
+    <div class="main-area">
+      <div class="top-bar">
+        <div class="top-bar__greeting">Trilha de <strong>auditoria</strong></div>
+      </div>
+
+      <main class="main-content">
+        <h1>Auditoria</h1>
+        <p class="lead">Histórico completo de alterações realizadas no sistema.</p>
+
+        <div class="audit-timeline" id="audit-timeline">
+          <div class="empty-state">Carregando...</div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script type="module" src="src/pages/audit.js"></script>
+</body>
+</html>

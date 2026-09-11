@@ -3,58 +3,33 @@ from app.repositories.audit_log_repository import AuditLogRepository
 
 
 class AuditService:
-    """Centraliza a criacao de registros de auditoria. Qualquer service
-    que precise logar uma acao (Process, Risk, e futuros) usa esta
-    mesma interface -- evita duplicar logica de formatacao de diff
-    espalhada pelo codigo."""
-
     def __init__(self, db: Session):
+        self.db = db
         self.repository = AuditLogRepository(db)
 
     def log_create(self, user_id: str | None, entity_type: str, entity_id: str):
-        self.repository.create(
-            user_id=user_id,
-            entity_type=entity_type,
-            entity_id=entity_id,
-            action="create",
-            changes="Registro criado.",
-        )
+        self.repository.create(user_id, entity_type, entity_id, "create", "Registro criado.")
 
-    def log_update(
-        self,
-        user_id: str | None,
-        entity_type: str,
-        entity_id: str,
-        before: dict,
-        after: dict,
-    ):
-        """Gera um texto legivel comparando os campos que existiam antes
-        e depois do update, no formato 'campo: valor_antigo -> valor_novo'.
-        So inclui campos que de fato mudaram."""
-        diffs = []
-        for field, new_value in after.items():
-            old_value = before.get(field)
-            if old_value != new_value:
-                diffs.append(f"{field}: {old_value} -> {new_value}")
-
+    def log_update(self, user_id, entity_type, entity_id, before: dict, after: dict):
+        diffs = [f"{f}: {before.get(f)} -> {v}" for f, v in after.items() if before.get(f) != v]
         changes_text = "; ".join(diffs) if diffs else "Nenhuma alteracao detectada."
+        self.repository.create(user_id, entity_type, entity_id, "update", changes_text)
 
-        self.repository.create(
-            user_id=user_id,
-            entity_type=entity_type,
-            entity_id=entity_id,
-            action="update",
-            changes=changes_text,
-        )
-
-    def log_delete(self, user_id: str | None, entity_type: str, entity_id: str):
-        self.repository.create(
-            user_id=user_id,
-            entity_type=entity_type,
-            entity_id=entity_id,
-            action="delete",
-            changes="Registro excluido.",
-        )
+    def log_delete(self, user_id, entity_type, entity_id):
+        self.repository.create(user_id, entity_type, entity_id, "delete", "Registro excluido.")
 
     def list_logs(self, skip: int = 0, limit: int = 100):
-        return self.repository.list_all(skip=skip, limit=limit)
+        logs = self.repository.list_all(skip=skip, limit=limit)
+        result = []
+        for log in logs:
+            result.append({
+                "id": log.id,
+                "user_id": log.user_id,
+                "user_name": log.user.name if log.user else None,
+                "entity_type": log.entity_type,
+                "entity_id": log.entity_id,
+                "action": log.action,
+                "changes": log.changes,
+                "created_at": log.created_at,
+            })
+        return result

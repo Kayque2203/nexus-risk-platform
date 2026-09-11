@@ -9,59 +9,55 @@
   <link rel="stylesheet" href="src/styles/main.css" />
 </head>
 <body>
-  <div class="app-shell">
-    <nav class="app-nav">
-      <div class="app-nav__brand">NEXUS</div>
-      <div class="app-nav__links">
-        <a href="app.html" class="nav-link nav-link--active">Dashboard</a>
-        <a href="processes.html" class="nav-link">Processos</a>
-        <a href="risks.html" class="nav-link">Riscos</a>
-      </div>
-      <div class="app-nav__user">
-        <span id="user-name">Carregando...</span>
-        <span class="role" id="user-role"></span>
-        <button class="btn-logout" id="logout-btn">Sair</button>
-      </div>
-    </nav>
+  <div class="app-shell-v2">
+    <div id="sidebar-container"></div>
 
-    <main class="app-content" style="max-width: 960px;">
-      <h1>Painel</h1>
-      <p class="lead">Visão geral de processos e riscos.</p>
-
-      <div class="stats-grid" id="stats-grid">
-        <div class="empty-state">Carregando indicadores...</div>
+    <div class="main-area">
+      <div class="top-bar">
+        <div class="top-bar__greeting">
+          Bem-vindo de volta, <strong id="greeting-name">...</strong>
+        </div>
       </div>
 
-      <h2 class="section-title">Processos recentes</h2>
-      <table class="data-table">
-        <thead>
-          <tr>
-            <th>Nome</th>
-            <th>Departamento</th>
-            <th>Status</th>
-            <th>Prioridade</th>
-          </tr>
-        </thead>
-        <tbody id="processes-table-body">
-          <tr><td colspan="4" class="empty-state">Carregando...</td></tr>
-        </tbody>
-      </table>
+      <main class="main-content">
+        <h1>Painel</h1>
+        <p class="lead">Visão geral de processos e riscos.</p>
 
-      <h2 class="section-title">Riscos recentes</h2>
-      <table class="data-table">
-        <thead>
-          <tr>
-            <th>Descrição</th>
-            <th>Categoria</th>
-            <th>Severidade</th>
-            <th>Status</th>
-          </tr>
-        </thead>
-        <tbody id="risks-table-body">
-          <tr><td colspan="4" class="empty-state">Carregando...</td></tr>
-        </tbody>
-      </table>
-    </main>
+        <div class="kpi-grid" id="stats-grid">
+          <div class="empty-state">Carregando indicadores...</div>
+        </div>
+
+        <h2 class="section-title">Processos recentes</h2>
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Nome</th>
+              <th>Departamento</th>
+              <th>Status</th>
+              <th>Prioridade</th>
+            </tr>
+          </thead>
+          <tbody id="processes-table-body">
+            <tr><td colspan="4" class="empty-state">Carregando...</td></tr>
+          </tbody>
+        </table>
+
+        <h2 class="section-title">Riscos recentes</h2>
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Descrição</th>
+              <th>Categoria</th>
+              <th>Severidade</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody id="risks-table-body">
+            <tr><td colspan="4" class="empty-state">Carregando...</td></tr>
+          </tbody>
+        </table>
+      </main>
+    </div>
   </div>
 
   <script type="module" src="src/pages/app.js"></script>

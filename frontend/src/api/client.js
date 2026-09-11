@@ -155,3 +155,25 @@ export async function deleteRisk(id) {
   });
   if (!response.ok) throw new Error("Não foi possível excluir o risco.");
 }
+
+
+export async function analyzeText(text) {
+  const token = getToken();
+  const response = await fetch(`${API_BASE_URL}/api/ai/analyze`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
+    body: JSON.stringify({ text }),
+  });
+  if (!response.ok) throw new Error("Não foi possível analisar o texto.");
+  return response.json();
+}
+
+
+export async function listAuditLogs() {
+  const token = getToken();
+  const response = await fetch(`${API_BASE_URL}/api/audit-logs/?limit=50`, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  if (!response.ok) throw new Error("Não foi possível carregar a auditoria.");
+  return response.json();
+}

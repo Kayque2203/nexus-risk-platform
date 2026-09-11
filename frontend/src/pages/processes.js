@@ -1,8 +1,11 @@
 ﻿import { getToken, clearToken, getCurrentUser, listProcesses, createProcess, updateProcess, deleteProcess } from "../api/client.js";
+import { renderSidebar } from "./sidebar.js";
 
 if (!getToken()) {
   window.location.href = "index.html";
 }
+
+document.getElementById("sidebar-container").innerHTML = renderSidebar("processes");
 
 const userNameEl = document.getElementById("user-name");
 const userRoleEl = document.getElementById("user-role");
@@ -136,7 +139,7 @@ tableBody.addEventListener("click", async (event) => {
 newBtn.addEventListener("click", () => openForm());
 cancelBtn.addEventListener("click", closeForm);
 
-logoutBtn.addEventListener("click", () => {
+document.getElementById("logout-btn").addEventListener("click", () => {
   clearToken();
   window.location.href = "index.html";
 });

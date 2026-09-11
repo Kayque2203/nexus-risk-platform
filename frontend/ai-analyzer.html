@@ -1,0 +1,77 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NEXUS — AI Risk Analyzer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Serif:wght@500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="src/styles/main.css" />
+</head>
+<body>
+  <div class="app-shell-v2">
+    <div id="sidebar-container"></div>
+
+    <div class="main-area">
+      <div class="top-bar">
+        <div class="top-bar__greeting">Análise inteligente de <strong>riscos</strong></div>
+      </div>
+
+      <main class="main-content">
+        <h1>AI Risk Analyzer</h1>
+        <p class="lead">Descreva uma situação de risco e o NEXUS realizará uma análise automática.</p>
+
+        <div class="ai-panel">
+          <label for="ai-text-input" style="display:block; font-size:13px; font-weight:600; margin-bottom:8px;">
+            Descrição da ocorrência
+          </label>
+          <textarea id="ai-text-input" placeholder="Ex: Foi identificada uma inconsistência durante a execução do processo e será necessária uma investigação..."></textarea>
+
+          <div class="form-error" id="ai-error"></div>
+
+          <button class="btn-ai" id="analyze-btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a5 5 0 0 1 5 5v2a5 5 0 0 1-10 0V7a5 5 0 0 1 5-5z"/><path d="M8 14v2a4 4 0 0 0 8 0v-2"/><line x1="12" y1="20" x2="12" y2="22"/></svg>
+            Analisar com IA
+          </button>
+
+          <div class="ai-result" id="ai-result">
+            <div class="ai-result__header">
+              <div class="ai-result__category" id="result-category">—</div>
+            </div>
+
+            <div class="level-row">
+              <div class="level-row__label">Probabilidade</div>
+              <div class="level-bar" id="bar-probability"></div>
+              <div class="level-row__value" id="value-probability">—</div>
+            </div>
+
+            <div class="level-row">
+              <div class="level-row__label">Impacto</div>
+              <div class="level-bar" id="bar-impact"></div>
+              <div class="level-row__value" id="value-impact">—</div>
+            </div>
+
+            <div class="level-row">
+              <div class="level-row__label">Severidade</div>
+              <div class="level-bar" id="bar-severity"></div>
+              <div class="level-row__value" id="value-severity">—</div>
+            </div>
+
+            <div class="ai-result__box">
+              <div class="ai-result__box-label">Justificativa</div>
+              <div class="ai-result__box-text" id="result-reason">—</div>
+            </div>
+
+            <div class="ai-result__box">
+              <div class="ai-result__box-label">Ação recomendada</div>
+              <div class="ai-result__box-text" id="result-action">—</div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script type="module" src="src/pages/ai-analyzer.js"></script>
+</body>
+</html>
