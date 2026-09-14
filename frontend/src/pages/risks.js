@@ -27,6 +27,29 @@ const STATUS_LABELS = {
 };
 
 let currentRisks = [];
+
+const filterSearch = document.getElementById("filter-search");
+const filterSeverity = document.getElementById("filter-severity");
+const filterStatus = document.getElementById("filter-status");
+
+function applyFilters() {
+  const searchTerm = filterSearch.value.toLowerCase().trim();
+  const severityValue = filterSeverity.value;
+  const statusValue = filterStatus.value;
+
+  const filtered = currentRisks.filter((r) => {
+    const matchesSearch = !searchTerm || r.description.toLowerCase().includes(searchTerm);
+    const matchesSeverity = !severityValue || r.severity === severityValue;
+    const matchesStatus = !statusValue || r.status === statusValue;
+    return matchesSearch && matchesSeverity && matchesStatus;
+  });
+
+  renderTable(filtered);
+}
+
+filterSearch.addEventListener("input", applyFilters);
+filterSeverity.addEventListener("change", applyFilters);
+filterStatus.addEventListener("change", applyFilters);
 let availableProcesses = [];
 
 function populateProcessSelect() {
@@ -86,7 +109,7 @@ function renderTable(risks) {
 async function loadRisks() {
   try {
     currentRisks = await listRisks();
-    renderTable(currentRisks);
+    applyFilters();
   } catch (err) {
     tableBody.innerHTML = `<tr><td colspan="5" class="empty-state">Erro ao carregar riscos.</td></tr>`;
   }
@@ -180,3 +203,5 @@ async function init() {
 }
 
 init();
+
+

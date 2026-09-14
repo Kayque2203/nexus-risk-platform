@@ -89,6 +89,25 @@
           </form>
         </div>
 
+        <div class="filter-bar">
+          <input type="text" id="filter-search" placeholder="Buscar por descrição..." />
+          <select id="filter-severity">
+            <option value="">Todas as severidades</option>
+            <option value="baixa">Baixa</option>
+            <option value="media">Média</option>
+            <option value="alta">Alta</option>
+            <option value="critica">Crítica</option>
+          </select>
+          <select id="filter-status">
+            <option value="">Todos os status</option>
+            <option value="aberto">Aberto</option>
+            <option value="em_mitigacao">Em mitigação</option>
+            <option value="mitigado">Mitigado</option>
+            <option value="aceito">Aceito</option>
+            <option value="cancelado">Cancelado</option>
+          </select>
+        </div>
+
         <table class="data-table">
           <thead>
             <tr>
@@ -110,3 +129,4 @@
   <script type="module" src="src/pages/risks.js"></script>
 </body>
 </html>
+

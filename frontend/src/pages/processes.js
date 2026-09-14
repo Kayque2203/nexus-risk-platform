@@ -75,10 +75,29 @@ function renderTable(processes) {
 
 let currentProcesses = [];
 
+const filterSearch = document.getElementById("filter-search");
+const filterStatus = document.getElementById("filter-status");
+
+function applyFilters() {
+  const searchTerm = filterSearch.value.toLowerCase().trim();
+  const statusValue = filterStatus.value;
+
+  const filtered = currentProcesses.filter((p) => {
+    const matchesSearch = !searchTerm || p.name.toLowerCase().includes(searchTerm);
+    const matchesStatus = !statusValue || p.status === statusValue;
+    return matchesSearch && matchesStatus;
+  });
+
+  renderTable(filtered);
+}
+
+filterSearch.addEventListener("input", applyFilters);
+filterStatus.addEventListener("change", applyFilters);
+
 async function loadProcesses() {
   try {
     currentProcesses = await listProcesses();
-    renderTable(currentProcesses);
+    applyFilters();
   } catch (err) {
     tableBody.innerHTML = `<tr><td colspan="5" class="empty-state">Erro ao carregar processos.</td></tr>`;
   }
@@ -158,3 +177,5 @@ async function init() {
 }
 
 init();
+
+

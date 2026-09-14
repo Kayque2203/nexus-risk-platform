@@ -79,6 +79,18 @@
           </form>
         </div>
 
+        <div class="filter-bar">
+          <input type="text" id="filter-search" placeholder="Buscar por nome..." />
+          <select id="filter-status">
+            <option value="">Todos os status</option>
+            <option value="aberto">Aberto</option>
+            <option value="em_andamento">Em andamento</option>
+            <option value="concluido">Concluído</option>
+            <option value="atrasado">Atrasado</option>
+            <option value="cancelado">Cancelado</option>
+          </select>
+        </div>
+
         <table class="data-table">
           <thead>
             <tr>
@@ -100,3 +112,4 @@
   <script type="module" src="src/pages/processes.js"></script>
 </body>
 </html>
+
