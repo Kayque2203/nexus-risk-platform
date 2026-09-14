@@ -94,7 +94,7 @@ function renderTable(risks) {
 
   tableBody.innerHTML = risks.map((r) => `
     <tr>
-      <td>${r.description}</td>
+      <td><a href="risk-detail.html?id=${r.id}" style="color:inherit;">${r.description}</a></td>
       <td>${r.category || "—"}</td>
       <td><span class="badge badge--${r.severity || "media"}">${(r.severity || "—").toUpperCase()}</span></td>
       <td>${STATUS_LABELS[r.status] || r.status}</td>
@@ -203,5 +203,6 @@ async function init() {
 }
 
 init();
+
 
 

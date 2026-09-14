@@ -177,3 +177,13 @@ export async function listAuditLogs() {
   if (!response.ok) throw new Error("Não foi possível carregar a auditoria.");
   return response.json();
 }
+
+
+export async function getRisk(id) {
+  const token = getToken();
+  const response = await fetch(`${API_BASE_URL}/api/risks/${id}`, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  if (!response.ok) throw new Error("Risco não encontrado.");
+  return response.json();
+}
