@@ -36,6 +36,7 @@ const ICONS = {
 };
 
 function renderStats(stats) {
+  renderSeverityChart(stats.risks_by_severity);
   const cards = [
     {
       icon: ICONS.processes,
@@ -72,6 +73,26 @@ function renderStats(stats) {
       <div class="kpi-card__label">${card.label}</div>
     </div>
   `).join("");
+}
+
+function renderSeverityChart(risksBySeverity) {
+  const container = document.getElementById("severity-chart");
+  const levels = ["baixa", "media", "alta", "critica"];
+  const maxValue = Math.max(...Object.values(risksBySeverity), 1);
+
+  container.innerHTML = levels.map((level) => {
+    const count = risksBySeverity[level] || 0;
+    const widthPercent = Math.round((count / maxValue) * 100);
+    return `
+      <div class="chart-row">
+        <div class="chart-row__label">${level}</div>
+        <div class="chart-row__track">
+          <div class="chart-row__fill chart-row__fill--${level}" style="width: ${widthPercent}%"></div>
+        </div>
+        <div class="chart-row__count">${count}</div>
+      </div>
+    `;
+  }).join("");
 }
 
 function renderProcesses(processes) {
@@ -144,3 +165,5 @@ document.getElementById("logout-btn").addEventListener("click", () => {
 });
 
 loadEverything();
+
+

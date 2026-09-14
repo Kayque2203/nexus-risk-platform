@@ -92,7 +92,7 @@ async function init() {
     window.location.href = "index.html";
     return;
   }
-  await loadLogs();
+  await loadLogs();""
 }
 
 init();
