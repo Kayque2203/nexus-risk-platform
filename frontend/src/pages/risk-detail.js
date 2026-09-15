@@ -11,7 +11,9 @@ const content = document.getElementById("detail-content");
 
 async function load() {
   try {
-    await getCurrentUser();
+    const user = await getCurrentUser();
+    document.getElementById("user-name").textContent = user.name;
+    document.getElementById("user-role").textContent = user.role;
   } catch {
     clearToken();
     window.location.href = "index.html";
@@ -53,3 +55,4 @@ async function load() {
 }
 
 load();
+
