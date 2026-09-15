@@ -187,3 +187,13 @@ export async function getRisk(id) {
   if (!response.ok) throw new Error("Risco não encontrado.");
   return response.json();
 }
+
+
+export async function getProcess(id) {
+  const token = getToken();
+  const response = await fetch(`${API_BASE_URL}/api/processes/${id}`, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  if (!response.ok) throw new Error("Processo não encontrado.");
+  return response.json();
+}

@@ -61,7 +61,7 @@ function renderTable(processes) {
 
   tableBody.innerHTML = processes.map((p) => `
     <tr>
-      <td>${p.name}</td>
+      <td><a href="process-detail.html?id=${p.id}" style="color:inherit;">${p.name}</a></td>
       <td>${p.department || "—"}</td>
       <td>${STATUS_LABELS[p.status] || p.status}</td>
       <td>${p.priority}</td>
@@ -177,5 +177,6 @@ async function init() {
 }
 
 init();
+
 
 
