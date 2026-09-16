@@ -13,13 +13,23 @@
       <div class="top-bar">
         <a href="risks.html" class="btn-back-link"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>Voltar para Riscos</a>
       </div>
-      <main class="main-content" id="detail-content">
-        <div class="empty-state">Carregando...</div>
+      <main class="main-content"><div id="detail-content"></div>
+        <div id="actions-section" style="display:none;">
+          <h2 class="section-title">Ações de mitigação</h2>
+          <div id="actions-list"></div>
+          <form id="new-action-form" style="margin-top:16px;display:flex;gap:8px;">
+            <input type="text" id="new-action-desc" placeholder="Nova ação..." style="flex:1;padding:9px;border:1px solid var(--color-line);border-radius:4px;" required />
+            <button type="submit" class="btn-secondary">Adicionar</button>
+          </form>
+        </div>
       </main>
     </div>
   </div>
   <script type="module" src="src/pages/risk-detail.js"></script>
 </body>
 </html>
+
+
+
 
 

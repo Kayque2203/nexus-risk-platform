@@ -1,4 +1,4 @@
-﻿import { getToken, clearToken, getCurrentUser, getRisk } from "../api/client.js";
+﻿import { getToken, clearToken, getCurrentUser, getRisk, listActionsByRisk, createAction } from "../api/client.js";
 import { renderSidebar } from "./sidebar.js";
 
 if (!getToken()) window.location.href = "index.html";
@@ -54,5 +54,40 @@ async function load() {
   }
 }
 
+async function loadActions() {
+  try {
+    const actions = await listActionsByRisk(riskId);
+    document.getElementById("actions-section").style.display = "block";
+    const list = document.getElementById("actions-list");
+    if (actions.length === 0) {
+      list.innerHTML = `<p class="empty-state">Nenhuma ação cadastrada.</p>`;
+    } else {
+      list.innerHTML = actions.map(a => `
+        <div class="ai-result__box">
+          <div>${a.description}</div>
+          <div style="font-size:12px;color:var(--color-ink-soft);margin-top:4px;">${a.status}</div>
+        </div>
+      `).join("");
+    }
+  } catch (err) {
+    console.error(err);
+  }
+}
+
+document.getElementById("new-action-form").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const desc = document.getElementById("new-action-desc").value;
+  try {
+    await createAction({ risk_id: riskId, description: desc, status: "aberta" });
+    document.getElementById("new-action-desc").value = "";
+    await loadActions();
+  } catch (err) {
+    alert(err.message);
+  }
+});
+
 load();
+loadActions();
+
+
 

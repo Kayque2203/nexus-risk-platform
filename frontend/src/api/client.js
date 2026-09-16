@@ -197,3 +197,24 @@ export async function getProcess(id) {
   if (!response.ok) throw new Error("Processo não encontrado.");
   return response.json();
 }
+
+
+export async function listActionsByRisk(riskId) {
+  const token = getToken();
+  const response = await fetch(`${API_BASE_URL}/api/actions/?risk_id=${riskId}`, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  if (!response.ok) throw new Error("Erro ao carregar ações.");
+  return response.json();
+}
+
+export async function createAction(data) {
+  const token = getToken();
+  const response = await fetch(`${API_BASE_URL}/api/actions/`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
+    body: JSON.stringify(data),
+  });
+  if (!response.ok) throw new Error("Erro ao criar ação.");
+  return response.json();
+}
