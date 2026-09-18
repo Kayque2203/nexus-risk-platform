@@ -37,6 +37,20 @@ class DashboardService:
             if r.severity in risks_by_severity:
                 risks_by_severity[r.severity] += 1
 
+        # Insight simples: categoria com maior concentracao de riscos.
+        # Nao e "tendencia" (exigiria comparar periodos no tempo, dado
+        # que nao temos ainda) -- e uma concentracao real, no momento atual.
+        category_counts: dict[str, int] = {}
+        for r in risks:
+            cat = r.category or "Sem categoria"
+            category_counts[cat] = category_counts.get(cat, 0) + 1
+
+        top_category = None
+        top_category_count = 0
+        if category_counts:
+            top_category = max(category_counts, key=category_counts.get)
+            top_category_count = category_counts[top_category]
+
         return {
             "total_processes": len(processes),
             "overdue_processes": overdue_processes,
@@ -44,4 +58,7 @@ class DashboardService:
             "critical_risks": risks_by_severity["critica"],
             "overdue_risks": overdue_risks,
             "risks_by_severity": risks_by_severity,
+            "top_risk_category": top_category,
+            "top_risk_category_count": top_category_count,
         }
+

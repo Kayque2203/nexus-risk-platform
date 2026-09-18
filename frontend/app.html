@@ -33,8 +33,12 @@
           <div id="severity-chart"></div>
         </div>
 
-        <h2 class="section-title">Processos recentes</h2>
-        <table class="data-table">
+        <div class="chart-panel" id="insight-panel" style="display:none;">
+          <h2>⚠ Ponto de Atenção</h2>
+          <p id="insight-text" style="font-size:14px;color:var(--color-ink-soft);"></p>
+        </div>
+
+                <table class="data-table">
           <thead>
             <tr>
               <th>Nome</th>
@@ -69,5 +73,7 @@
   <script type="module" src="src/pages/app.js"></script>
 </body>
 </html>
+
+
 
 

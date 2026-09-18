@@ -51,6 +51,12 @@ const ICONS = {
 
 function renderStats(stats) {
   renderSeverityChart(stats.risks_by_severity);
+
+  if (stats.top_risk_category && stats.top_risk_category_count > 1) {
+    document.getElementById("insight-panel").style.display = "block";
+    document.getElementById("insight-text").textContent =
+      `A categoria "${stats.top_risk_category}" concentra ${stats.top_risk_category_count} dos ${stats.total_risks} riscos registrados — a maior concentração entre todas as categorias.`;
+  }
   const cards = [
     {
       icon: ICONS.processes,
@@ -179,6 +185,7 @@ document.getElementById("logout-btn").addEventListener("click", () => {
 });
 
 loadEverything();
+
 
 
 
