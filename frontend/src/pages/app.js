@@ -1,11 +1,25 @@
 ﻿import { getToken, clearToken, getCurrentUser, getDashboardStats, listProcesses, listRisks } from "../api/client.js";
-import { renderSidebar } from "./sidebar.js";
+import { renderSidebar, renderNotifBell } from "./sidebar.js";
 
 if (!getToken()) {
   window.location.href = "index.html";
 }
 
 document.getElementById("sidebar-container").innerHTML = renderSidebar("dashboard");
+document.getElementById("notif-container").innerHTML = renderNotifBell();
+
+document.getElementById("notif-bell").addEventListener("click", async () => {
+  const dropdown = document.getElementById("notif-dropdown");
+  dropdown.classList.toggle("open");
+  if (dropdown.classList.contains("open") && !dropdown.dataset.loaded) {
+    const { listAuditLogs } = await import("../api/client.js");
+    const logs = await listAuditLogs();
+    dropdown.innerHTML = logs.slice(0, 5).map(l => `
+      <div class="notif-item">${l.user_name || "Alguém"} ${l.action === "create" ? "criou" : l.action === "update" ? "atualizou" : "excluiu"} um ${l.entity_type === "Risk" ? "risco" : l.entity_type === "Process" ? "processo" : l.entity_type === "Action" ? "ação" : "item"}</div>
+    `).join("") || `<div class="notif-item">Nenhuma atividade recente.</div>`;
+    dropdown.dataset.loaded = "true";
+  }
+});
 
 const userNameEl = document.getElementById("user-name");
 const userRoleEl = document.getElementById("user-role");
@@ -165,5 +179,9 @@ document.getElementById("logout-btn").addEventListener("click", () => {
 });
 
 loadEverything();
+
+
+
+
 
 
