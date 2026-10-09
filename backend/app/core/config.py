@@ -1,4 +1,4 @@
-﻿from pydantic_settings import BaseSettings, SettingsConfigDict
+from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class Settings(BaseSettings):
@@ -14,6 +14,9 @@ class Settings(BaseSettings):
     # Banco de dados: SQLite agora, PostgreSQL no futuro,
     # trocando apenas esta string de conexao.
     database_url: str = "sqlite:///./nexus.db"
+
+    # CORS: origens permitidas (frontend), separadas por virgula.
+    cors_origins: str = "http://localhost:5500,http://127.0.0.1:5500"
 
     # Autenticacao JWT
     secret_key: str
