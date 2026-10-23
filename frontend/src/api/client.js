@@ -54,18 +54,18 @@ export async function getDashboardStats() {
   return response.json();
 }
 
-export async function listProcesses() {
+export async function listProcesses(limit = 10) {
   const token = getToken();
-  const response = await fetch(`${API_BASE_URL}/api/processes/?limit=10`, {
+  const response = await fetch(`${API_BASE_URL}/api/processes/?limit=${limit}`, {
     headers: { Authorization: `Bearer ${token}` },
   });
   if (!response.ok) throw new Error("Não foi possível carregar os processos.");
   return response.json();
 }
 
-export async function listRisks() {
+export async function listRisks(limit = 10) {
   const token = getToken();
-  const response = await fetch(`${API_BASE_URL}/api/risks/?limit=10`, {
+  const response = await fetch(`${API_BASE_URL}/api/risks/?limit=${limit}`, {
     headers: { Authorization: `Bearer ${token}` },
   });
   if (!response.ok) throw new Error("Não foi possível carregar os riscos.");

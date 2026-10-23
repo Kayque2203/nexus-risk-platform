@@ -1,4 +1,4 @@
-﻿import { getToken, clearToken, getCurrentUser, listRisks, createRisk, updateRisk, deleteRisk, listAllProcessesForSelect } from "../api/client.js";
+import { getToken, clearToken, getCurrentUser, listRisks, createRisk, updateRisk, deleteRisk, listAllProcessesForSelect } from "../api/client.js";
 import { renderSidebar } from "./sidebar.js";
 
 if (!getToken()) {
@@ -108,7 +108,7 @@ function renderTable(risks) {
 
 async function loadRisks() {
   try {
-    currentRisks = await listRisks();
+    currentRisks = await listRisks(1000);
     applyFilters();
   } catch (err) {
     tableBody.innerHTML = `<tr><td colspan="5" class="empty-state">Erro ao carregar riscos.</td></tr>`;

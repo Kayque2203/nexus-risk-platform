@@ -1,4 +1,4 @@
-﻿import { getToken, clearToken, getCurrentUser, listProcesses, createProcess, updateProcess, deleteProcess } from "../api/client.js";
+import { getToken, clearToken, getCurrentUser, listProcesses, createProcess, updateProcess, deleteProcess } from "../api/client.js";
 import { renderSidebar } from "./sidebar.js";
 
 if (!getToken()) {
@@ -96,7 +96,7 @@ filterStatus.addEventListener("change", applyFilters);
 
 async function loadProcesses() {
   try {
-    currentProcesses = await listProcesses();
+    currentProcesses = await listProcesses(1000);
     applyFilters();
   } catch (err) {
     tableBody.innerHTML = `<tr><td colspan="5" class="empty-state">Erro ao carregar processos.</td></tr>`;
