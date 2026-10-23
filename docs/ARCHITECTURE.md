@@ -89,7 +89,7 @@ Cada decisão segue o formato **Problema → Alternativas → Decisão → Justi
 - **Problema:** o design original pedia um serviço de IA totalmente separado (outro processo/porta). Isso normalmente se beneficia de Docker Compose para orquestração, que está indisponível.
 - **Alternativas:** (a) processo Python separado rodando em outra porta, orquestrado manualmente; (b) módulo interno do mesmo FastAPI, com fronteira de código isolada (pasta própria, interface abstrata).
 - **Decisão:** (b) para a fase atual, com a interface desenhada para permitir extração para (a) sem reescrever a lógica interna.
-- **Justificativa:** sem Docker, orquestrar dois processos manualmente (dois terminais, duas portas, CORS entre eles) adiciona complexidade operacional sem benefício real nesta fase. O importante architeturalmente é o **desacoplamento lógico** (a camada de negócio não chama diretamente uma API de IA específica, mas uma interface `AIAnalyzer`), não o desacoplamento físico. Isso é o mesmo princípio de "Dependency Inversion" que se aplicaria mesmo com serviços separados.
+- **Justificativa:** sem Docker, orquestrar dois processos manualmente (dois terminais, duas portas, CORS entre eles) adiciona complexidade operacional sem benefício real nesta fase. O importante arquiteturalmente é o **desacoplamento lógico** (a camada de negócio não chama diretamente uma API de IA específica, mas uma interface `AIAnalyzer`), não o desacoplamento físico. Isso é o mesmo princípio de "Dependency Inversion" que se aplicaria mesmo com serviços separados.
 
 ### 3.5 Autenticação
 
@@ -160,26 +160,48 @@ nexus/
 └── README.md
 ```
 
-## 5. Fluxo de dados — exemplo (Análise de risco crítico)
+## 5. Fluxos de dados principais
+
+### 5.1 Criação de um risco
 
 ```mermaid
 sequenceDiagram
     participant U as Usuário (Frontend)
     participant A as API (FastAPI)
+    participant S as RiskService
     participant R as Risk Engine
-    participant AI as AI Analyzer
-    participant D as Banco - SQLite local ou PostgreSQL
-    participant W as Webhook (futuro)
+    participant D as Banco
 
-    U->>A: POST /api/risks/ (probabilidade, impacto)
-    A->>R: calcular severidade
-    R-->>A: severidade = CRÍTICO
-    A->>AI: (opcional) POST /api/ai/analyze (texto do risco)
-    AI-->>A: {risk_level, reason, recommended_action}
-    A->>D: salvar Risk + AIAnalysis + AuditLog
-    A-->>U: 201 Created + payload do risco
-    A->>W: (se crítico) disparar evento de automação
+    U->>A: POST /api/risks/ (probabilidade, impacto, process_id)
+    A->>S: criar risco
+    S->>R: calculate_severity(probabilidade, impacto)
+    R-->>S: severidade
+    S->>D: salvar Risk e registrar AuditLog
+    A-->>U: risco criado
 ```
+
+A severidade nunca é informada pelo cliente: é sempre calculada pela matriz 4×4 do Risk Engine. Nível inválido gera `KeyError` de propósito.
+
+### 5.2 Análise de risco por texto (IA)
+
+```mermaid
+sequenceDiagram
+    participant U as Usuário (Frontend)
+    participant A as API (FastAPI)
+    participant S as AIAnalysisService
+    participant K as AIAnalyzer (KeywordAnalyzer)
+    participant D as Banco
+
+    U->>A: POST /api/ai/analyze (texto)
+    A->>S: analisar texto
+    S->>K: analyze(texto)
+    K-->>S: nível de risco, motivo e ação recomendada
+    Note over S,K: o service tem fallback se o analisador falhar
+    S->>D: persistir AIAnalysis
+    A-->>U: resultado da análise
+```
+
+A análise é um endpoint independente: criar um risco não a dispara. Toda análise é persistida na tabela `ai_analyses`. A automação por webhooks (Teams, Power Automate) continua no roadmap e não faz parte do fluxo atual.
 
 ## 6. Banco de dados e migração SQLite → PostgreSQL
 
