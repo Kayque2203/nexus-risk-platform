@@ -6,6 +6,9 @@ Plataforma inteligente de gestão de processos e riscos corporativos, com cálcu
 
 > Projeto de portfólio construído do zero, incluindo diagnóstico de ambiente restrito, arquitetura adaptativa, backend, frontend e testes automatizados.
 
+> **Demo ao vivo:** https://nexus-frontend-m1gb.onrender.com
+> O backend está no plano gratuito do Render, então a primeira visita pode levar cerca de 1 minuto para responder (cold start).
+
 ## 📸 Screenshots
 
 <table>
@@ -208,9 +211,21 @@ python -m http.server 5500
 
 Acesse `http://127.0.0.1:5500`.
 
+### Dados de demonstração
+
+O script `backend/seed_demo.py` popula uma API em execução (local ou publicada) com 8 processos de qualidade e compliance, 15 riscos e 14 ações, todos sintéticos. Como usa a própria API, a severidade vem do Risk Engine e a auditoria é registrada.
+
+```bash
+cd backend
+python seed_demo.py                         # usa a API padrão
+python seed_demo.py http://127.0.0.1:8000   # ou informe outra URL
+```
+
+O script pede e-mail e senha e é idempotente por processo (pula os que já existem).
+
 ## 🗄️ Banco de dados
 
-O projeto usa SQLite por padrão, com todo o acesso a dados abstraído via SQLAlchemy — a migração para PostgreSQL exige apenas trocar a variável `DATABASE_URL` no `.env` e rodar as migrations no novo banco.
+O desenvolvimento local usa SQLite, e a produção usa PostgreSQL no Neon. Todo o acesso a dados passa pelo SQLAlchemy, então a troca de banco exige apenas alterar a variável `DATABASE_URL` (com o prefixo `postgresql+psycopg://` para PostgreSQL) e rodar `alembic upgrade head`.
 
 ## 🧪 Testes
 
@@ -219,7 +234,7 @@ cd backend
 python -m pytest -v
 ```
 
-Cobertura inclui: autenticação, CRUD de processos e riscos, validação de regras de negócio (e-mail duplicado, processo inexistente), e a matriz completa do Risk Engine testada via `@pytest.mark.parametrize`.
+São 36 testes automatizados (autenticação, processos, riscos e análise de IA), executados a cada push pelo GitHub Actions. Cobrem CRUD, regras de negócio (e-mail duplicado, processo inexistente) e a matriz completa do Risk Engine via `@pytest.mark.parametrize`. Os testes usam um SQLite isolado, independente do `.env`.
 
 Documentação completa e interativa em `/docs` (Swagger UI).
 
@@ -236,6 +251,23 @@ Documentação completa e interativa em `/docs` (Swagger UI).
 | GET          | `/api/dashboard/`     | Indicadores agregados            |
 | GET          | `/api/audit-logs/`    | Trilha de auditoria              |
 | POST         | `/api/ai/analyze`     | Análise de risco por texto (IA) |
+
+## ☁️ Hospedagem
+
+| Componente | Serviço |
+| ---------- | ------- |
+| Frontend (estático, sem build) | Render Static Site |
+| Backend (FastAPI) | Render Web Service (plano Free) |
+| Banco de dados | Neon (PostgreSQL, região São Paulo) |
+
+> **Cold start:** no plano gratuito o backend hiberna após cerca de 15 minutos sem acesso. A primeira requisição pode levar de 30 a 60 segundos.
+
+## 🔐 Segurança e limitações conhecidas
+
+- O cadastro de usuários (`POST /api/users/`) é público, escolha consciente para um projeto de portfólio. Em um cenário real seria restrito a administradores.
+- O JWT fica em `localStorage` e o logout é apenas no cliente (trade-off do modelo stateless).
+- A autorização é binária (autenticado ou não): o campo `role` existe, mas ainda não é aplicado.
+- Todos os dados da demonstração são sintéticos.
 
 ## 🗺️ Roadmap
 
