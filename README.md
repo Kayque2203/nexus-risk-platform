@@ -275,9 +275,11 @@ Documentação completa e interativa em `/docs` (Swagger UI).
 - [ ] Copiloto conversacional sobre os dados
 - [ ] Automação via webhooks (Teams, Power Automate)
 - [ ] Exportação de relatórios (CSV, Excel, PDF)
-- [ ] Docker Compose e CI/CD via GitHub Actions
-- [ ] Migração de referência para PostgreSQL
+- [x] CI via GitHub Actions (36 testes a cada push)
+- [ ] Validar o Docker Compose (escrito, ainda não testado em ambiente com Docker)
+- [x] PostgreSQL em produção (Neon)
 - [ ] Portar frontend para React + TypeScript + Vite (atualmente vanilla JS por restrição de ambiente)
+- [ ] Controle de acesso por papéis (roles) na API e na interface
 
 ## 👤 Autor
 
