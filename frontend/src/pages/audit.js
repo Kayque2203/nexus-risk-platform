@@ -30,7 +30,8 @@ const ENTITY_LABELS = {
 };
 
 function formatDate(isoString) {
-  const date = new Date(isoString);
+  const hasZone = /(Z|[+-]\d{2}:?\d{2})$/.test(isoString);
+  const date = new Date(hasZone ? isoString : isoString + "Z");
   return date.toLocaleString("pt-BR", {
     day: "2-digit",
     month: "2-digit",
