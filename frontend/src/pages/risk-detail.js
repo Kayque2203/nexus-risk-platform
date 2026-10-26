@@ -16,6 +16,13 @@ const LEVEL_LABELS = {
   critica: "Cr\u00edtica",
 };
 
+const IMPACT_LABELS = {
+  baixa: "Baixo",
+  media: "M\u00e9dio",
+  alta: "Alto",
+  critica: "Cr\u00edtico",
+};
+
 const RISK_STATUS_LABELS = {
   aberto: "Aberto",
   em_mitigacao: "Em mitiga\u00e7\u00e3o",
@@ -60,7 +67,7 @@ async function load() {
         </div>
         <div class="ai-result__box">
           <div class="ai-result__box-label">Probabilidade / Impacto</div>
-          <div>${LEVEL_LABELS[r.probability] || r.probability} / ${LEVEL_LABELS[r.impact] || r.impact}</div>
+          <div>${LEVEL_LABELS[r.probability] || r.probability} / ${IMPACT_LABELS[r.impact] || r.impact}</div>
         </div>
         <div class="ai-result__box">
           <div class="ai-result__box-label">Status</div>

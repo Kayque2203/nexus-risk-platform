@@ -1,4 +1,4 @@
-﻿import { getToken, clearToken, getCurrentUser, getDashboardStats, listProcesses, listRisks } from "../api/client.js";
+import { getToken, clearToken, getCurrentUser, getDashboardStats, listProcesses, listRisks } from "../api/client.js";
 import { renderSidebar, renderNotifBell } from "./sidebar.js";
 
 if (!getToken()) {
@@ -139,7 +139,7 @@ function renderRisks(risks) {
     <tr>
       <td>${r.description}</td>
       <td>${r.category || "—"}</td>
-      <td><span class="badge badge--${r.severity || "media"}">${(r.severity || "—").toUpperCase()}</span></td>
+      <td><span class="badge badge--${r.severity || "media"}">${({baixa:"Baixa",media:"M\u00e9dia",alta:"Alta",critica:"Cr\u00edtica"}[r.severity] || r.severity || "—").toUpperCase()}</span></td>
       <td>${STATUS_LABELS[r.status] || r.status}</td>
     </tr>
   `).join("");

@@ -96,7 +96,7 @@ function renderTable(risks) {
     <tr>
       <td><a href="risk-detail.html?id=${r.id}" style="color:inherit;">${r.description}</a></td>
       <td>${r.category || "—"}</td>
-      <td><span class="badge badge--${r.severity || "media"}">${(r.severity || "—").toUpperCase()}</span></td>
+      <td><span class="badge badge--${r.severity || "media"}">${({baixa:"Baixa",media:"M\u00e9dia",alta:"Alta",critica:"Cr\u00edtica"}[r.severity] || r.severity || "—").toUpperCase()}</span></td>
       <td>${STATUS_LABELS[r.status] || r.status}</td>
       <td>
         <button class="btn-small" data-edit="${r.id}">Editar</button>
