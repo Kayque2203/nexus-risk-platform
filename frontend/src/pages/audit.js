@@ -1,4 +1,4 @@
-﻿import { getToken, clearToken, getCurrentUser, listAuditLogs } from "../api/client.js";
+import { getToken, clearToken, getCurrentUser, listAuditLogs } from "../api/client.js";
 import { renderSidebar } from "./sidebar.js";
 
 if (!getToken()) {
@@ -26,6 +26,7 @@ const ACTION_LABELS = {
 const ENTITY_LABELS = {
   Process: "processo",
   Risk: "risco",
+  Action: "a\u00e7\u00e3o",
 };
 
 function formatDate(isoString) {
@@ -58,7 +59,7 @@ function renderTimeline(logs) {
         <div class="audit-entry__content">
           <div class="audit-entry__title">
             Usuário <strong>${log.user_name || "desconhecido"}</strong>
-            ${actionLabel} o ${entityLabel} <strong>#${shortId}</strong>
+            ${actionLabel} ${entityLabel === "a\u00e7\u00e3o" ? "a" : "o"} ${entityLabel} <strong>#${shortId}</strong>
           </div>
           ${log.changes ? `<div class="audit-entry__changes">${log.changes}</div>` : ""}
           <div class="audit-entry__meta">${formatDate(log.created_at)}</div>

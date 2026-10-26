@@ -1,4 +1,4 @@
-﻿import { getToken, clearToken, getCurrentUser, getRisk, listActionsByRisk, createAction } from "../api/client.js";
+import { getToken, clearToken, getCurrentUser, getRisk, listActionsByRisk, createAction } from "../api/client.js";
 import { renderSidebar } from "./sidebar.js";
 
 if (!getToken()) window.location.href = "index.html";
@@ -8,6 +8,29 @@ document.getElementById("sidebar-container").innerHTML = renderSidebar("risks");
 const params = new URLSearchParams(window.location.search);
 const riskId = params.get("id");
 const content = document.getElementById("detail-content");
+
+const LEVEL_LABELS = {
+  baixa: "Baixa",
+  media: "M\u00e9dia",
+  alta: "Alta",
+  critica: "Cr\u00edtica",
+};
+
+const RISK_STATUS_LABELS = {
+  aberto: "Aberto",
+  em_mitigacao: "Em mitiga\u00e7\u00e3o",
+  mitigado: "Mitigado",
+  aceito: "Aceito",
+  cancelado: "Cancelado",
+};
+
+const ACTION_STATUS_LABELS = {
+  aberta: "Aberta",
+  em_andamento: "Em andamento",
+  concluida: "Conclu\u00edda",
+  atrasada: "Atrasada",
+  cancelada: "Cancelada",
+};
 
 async function load() {
   try {
@@ -33,19 +56,19 @@ async function load() {
       <div class="ai-panel">
         <div class="ai-result__box">
           <div class="ai-result__box-label">Severidade</div>
-          <span class="badge badge--${r.severity}">${r.severity.toUpperCase()}</span>
+          <span class="badge badge--${r.severity}">${(LEVEL_LABELS[r.severity] || r.severity).toUpperCase()}</span>
         </div>
         <div class="ai-result__box">
           <div class="ai-result__box-label">Probabilidade / Impacto</div>
-          <div>${r.probability} / ${r.impact}</div>
+          <div>${LEVEL_LABELS[r.probability] || r.probability} / ${LEVEL_LABELS[r.impact] || r.impact}</div>
         </div>
         <div class="ai-result__box">
           <div class="ai-result__box-label">Status</div>
-          <div>${r.status}</div>
+          <div>${RISK_STATUS_LABELS[r.status] || r.status}</div>
         </div>
         <div class="ai-result__box">
           <div class="ai-result__box-label">Prioridade</div>
-          <div>${r.priority}</div>
+          <div>${LEVEL_LABELS[r.priority] || r.priority}</div>
         </div>
       </div>
     `;
@@ -65,7 +88,7 @@ async function loadActions() {
       list.innerHTML = actions.map(a => `
         <div class="ai-result__box">
           <div>${a.description}</div>
-          <div style="font-size:12px;color:var(--color-ink-soft);margin-top:4px;">${a.status}</div>
+          <div style="font-size:12px;color:var(--color-ink-soft);margin-top:4px;">${ACTION_STATUS_LABELS[a.status] || a.status}</div>
         </div>
       `).join("");
     }
