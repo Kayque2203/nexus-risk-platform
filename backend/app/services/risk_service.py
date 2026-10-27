@@ -1,6 +1,7 @@
-﻿from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session
 
 from app.repositories.risk_repository import RiskRepository
+from app.repositories.action_repository import ActionRepository
 from app.repositories.process_repository import ProcessRepository
 from app.schemas.risk import RiskCreate, RiskUpdate
 from app.services.risk_engine import calculate_severity
@@ -12,6 +13,7 @@ class RiskService:
     def __init__(self, db: Session):
         self.repository = RiskRepository(db)
         self.process_repository = ProcessRepository(db)
+        self.action_repository = ActionRepository(db)
         self.audit = AuditService(db)
 
     def list_risks(self, skip: int = 0, limit: int = 100) -> list[Risk]:
@@ -64,6 +66,10 @@ class RiskService:
         risk = self.repository.get_by_id(risk_id)
         if not risk:
             return False
+        for action in self.action_repository.list_by_risk(risk_id):
+            action_id = action.id
+            self.action_repository.delete(action)
+            self.audit.log_delete(user_id, "Action", action_id)
         self.repository.delete(risk)
         self.audit.log_delete(user_id, "Risk", risk_id)
         return True

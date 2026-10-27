@@ -107,3 +107,23 @@ def test_severity_recalculated_on_update(client, auth_headers):
         headers=auth_headers,
     ).json()
     assert updated["severity"] == "critica"
+
+
+def test_delete_risk_with_actions_deletes_actions_too(client, auth_headers):
+    process = create_process(client, auth_headers)
+    risk = client.post(
+        "/api/risks/", json=create_risk_payload(process["id"]), headers=auth_headers
+    ).json()
+    action_response = client.post(
+        "/api/actions/",
+        json={"risk_id": risk["id"], "description": "Acao vinculada"},
+        headers=auth_headers,
+    )
+    assert action_response.status_code in (200, 201)
+
+    delete_response = client.delete(f"/api/risks/{risk['id']}", headers=auth_headers)
+    assert delete_response.status_code == 204
+
+    actions = client.get(f"/api/actions/?risk_id={risk['id']}", headers=auth_headers)
+    assert actions.status_code == 200
+    assert actions.json() == []

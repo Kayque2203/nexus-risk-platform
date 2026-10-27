@@ -1,4 +1,4 @@
-﻿from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 
 from app.api.deps import get_db, get_current_user
@@ -64,6 +64,9 @@ def delete_process(
     current_user: User = Depends(get_current_user),
 ):
     service = ProcessService(db)
-    deleted = service.delete_process(process_id, user_id=current_user.id)
+    try:
+        deleted = service.delete_process(process_id, user_id=current_user.id)
+    except ValueError as exc:
+        raise HTTPException(status_code=409, detail=str(exc))
     if not deleted:
         raise HTTPException(status_code=404, detail="Processo nao encontrado.")
