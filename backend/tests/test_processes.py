@@ -79,3 +79,25 @@ def test_delete_process(client, auth_headers):
 
     get_response = client.get(f"/api/processes/{created['id']}", headers=auth_headers)
     assert get_response.status_code == 404
+
+
+def test_delete_process_with_risks_returns_409(client, auth_headers):
+    process = client.post("/api/processes/", json=create_process_payload(), headers=auth_headers).json()
+    process_id = process["id"]
+    risk_payload = {
+        "process_id": process_id,
+        "description": "Risco vinculado",
+        "category": "Teste",
+        "probability": "media",
+        "impact": "media",
+        "priority": "media",
+        "status": "aberto",
+    }
+    client.post("/api/risks/", json=risk_payload, headers=auth_headers)
+
+    response = client.delete(f"/api/processes/{process_id}", headers=auth_headers)
+    assert response.status_code == 409
+    assert "riscos" in response.json()["detail"].lower()
+
+    get_response = client.get(f"/api/processes/{process_id}", headers=auth_headers)
+    assert get_response.status_code == 200

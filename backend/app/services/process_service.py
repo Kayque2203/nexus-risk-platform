@@ -1,6 +1,7 @@
-﻿from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session
 
 from app.repositories.process_repository import ProcessRepository
+from app.repositories.risk_repository import RiskRepository
 from app.schemas.process import ProcessCreate, ProcessUpdate
 from app.services.audit_service import AuditService
 from app.models.process import Process
@@ -9,6 +10,7 @@ from app.models.process import Process
 class ProcessService:
     def __init__(self, db: Session):
         self.repository = ProcessRepository(db)
+        self.risk_repository = RiskRepository(db)
         self.audit = AuditService(db)
 
     def list_processes(self, skip: int = 0, limit: int = 100) -> list[Process]:
@@ -52,6 +54,8 @@ class ProcessService:
         process = self.repository.get_by_id(process_id)
         if not process:
             return False
+        if self.risk_repository.list_by_process(process_id):
+            raise ValueError("Processo possui riscos vinculados. Exclua os riscos antes de excluir o processo.")
         self.repository.delete(process)
         self.audit.log_delete(user_id, "Process", process_id)
         return True
