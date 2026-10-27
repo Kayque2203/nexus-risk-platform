@@ -116,7 +116,10 @@ export async function deleteProcess(id) {
     method: "DELETE",
     headers: { Authorization: `Bearer ${token}` },
   });
-  if (!response.ok) throw new Error("Não foi possível excluir o processo.");
+  if (!response.ok) {
+    const err = await response.json().catch(() => ({}));
+    throw new Error(err.detail || "N\u00e3o foi poss\u00edvel excluir o processo.");
+  }
 }
 
 export async function createRisk(data) {
@@ -153,7 +156,10 @@ export async function deleteRisk(id) {
     method: "DELETE",
     headers: { Authorization: `Bearer ${token}` },
   });
-  if (!response.ok) throw new Error("Não foi possível excluir o risco.");
+  if (!response.ok) {
+    const err = await response.json().catch(() => ({}));
+    throw new Error(err.detail || "N\u00e3o foi poss\u00edvel excluir o risco.");
+  }
 }
 
 
