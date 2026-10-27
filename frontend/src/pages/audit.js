@@ -1,3 +1,4 @@
+import { escapeHtml } from "../utils/escape.js";
 import { getToken, clearToken, getCurrentUser, listAuditLogs } from "../api/client.js";
 import { renderSidebar } from "./sidebar.js";
 
@@ -59,10 +60,10 @@ function renderTimeline(logs) {
         </div>
         <div class="audit-entry__content">
           <div class="audit-entry__title">
-            Usuário <strong>${log.user_name || "desconhecido"}</strong>
+            Usuário <strong>${escapeHtml(log.user_name) || "desconhecido"}</strong>
             ${actionLabel} ${entityLabel === "a\u00e7\u00e3o" ? "a" : "o"} ${entityLabel} <strong>#${shortId}</strong>
           </div>
-          ${log.changes ? `<div class="audit-entry__changes">${log.changes}</div>` : ""}
+          ${log.changes ? `<div class="audit-entry__changes">${escapeHtml(log.changes)}</div>` : ""}
           <div class="audit-entry__meta">${formatDate(log.created_at)}</div>
         </div>
       </div>

@@ -1,4 +1,5 @@
-﻿import { getToken, clearToken, getCurrentUser, getProcess } from "../api/client.js";
+import { escapeHtml } from "../utils/escape.js";
+import { getToken, clearToken, getCurrentUser, getProcess } from "../api/client.js";
 import { renderSidebar } from "./sidebar.js";
 
 if (!getToken()) window.location.href = "index.html";
@@ -36,16 +37,16 @@ async function load() {
   try {
     const p = await getProcess(processId);
     content.innerHTML = `
-      <h1>${p.name}</h1>
-      <p class="lead">${p.description || "Sem descrição."}</p>
+      <h1>${escapeHtml(p.name)}</h1>
+      <p class="lead">${escapeHtml(p.description) || "Sem descrição."}</p>
       <div class="ai-panel">
         <div class="ai-result__box">
           <div class="ai-result__box-label">Categoria</div>
-          <div>${p.category || "—"}</div>
+          <div>${escapeHtml(p.category) || "—"}</div>
         </div>
         <div class="ai-result__box">
           <div class="ai-result__box-label">Departamento</div>
-          <div>${p.department || "—"}</div>
+          <div>${escapeHtml(p.department) || "—"}</div>
         </div>
         <div class="ai-result__box">
           <div class="ai-result__box-label">Status</div>
@@ -62,7 +63,7 @@ async function load() {
       </div>
     `;
   } catch (err) {
-    content.innerHTML = `<div class="empty-state">${err.message}</div>`;
+    content.innerHTML = `<div class="empty-state">${escapeHtml(err.message)}</div>`;
   }
 }
 

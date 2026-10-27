@@ -1,3 +1,4 @@
+import { escapeHtml } from "../utils/escape.js";
 import { getToken, clearToken, getCurrentUser, getRisk, listActionsByRisk, createAction } from "../api/client.js";
 import { renderSidebar } from "./sidebar.js";
 
@@ -58,8 +59,8 @@ async function load() {
   try {
     const r = await getRisk(riskId);
     content.innerHTML = `
-      <h1>${r.description}</h1>
-      <p class="lead">Categoria: ${r.category || "—"}</p>
+      <h1>${escapeHtml(r.description)}</h1>
+      <p class="lead">Categoria: ${escapeHtml(r.category) || "—"}</p>
       <div class="ai-panel">
         <div class="ai-result__box">
           <div class="ai-result__box-label">Severidade</div>
@@ -80,7 +81,7 @@ async function load() {
       </div>
     `;
   } catch (err) {
-    content.innerHTML = `<div class="empty-state">${err.message}</div>`;
+    content.innerHTML = `<div class="empty-state">${escapeHtml(err.message)}</div>`;
   }
 }
 
@@ -94,7 +95,7 @@ async function loadActions() {
     } else {
       list.innerHTML = actions.map(a => `
         <div class="ai-result__box">
-          <div>${a.description}</div>
+          <div>${escapeHtml(a.description)}</div>
           <div style="font-size:12px;color:var(--color-ink-soft);margin-top:4px;">${ACTION_STATUS_LABELS[a.status] || a.status}</div>
         </div>
       `).join("");

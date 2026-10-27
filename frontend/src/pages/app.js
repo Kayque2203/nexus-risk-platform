@@ -1,3 +1,4 @@
+import { escapeHtml } from "../utils/escape.js";
 import { getToken, clearToken, getCurrentUser, getDashboardStats, listProcesses, listRisks } from "../api/client.js";
 import { renderSidebar, renderNotifBell } from "./sidebar.js";
 
@@ -15,7 +16,7 @@ document.getElementById("notif-bell").addEventListener("click", async () => {
     const { listAuditLogs } = await import("../api/client.js");
     const logs = await listAuditLogs();
     dropdown.innerHTML = logs.slice(0, 5).map(l => `
-      <div class="notif-item">${l.user_name || "Alguém"} ${l.action === "create" ? "criou" : l.action === "update" ? "atualizou" : "excluiu"} um ${l.entity_type === "Risk" ? "risco" : l.entity_type === "Process" ? "processo" : l.entity_type === "Action" ? "ação" : "item"}</div>
+      <div class="notif-item">${escapeHtml(l.user_name) || "Alguém"} ${l.action === "create" ? "criou" : l.action === "update" ? "atualizou" : "excluiu"} um ${l.entity_type === "Risk" ? "risco" : l.entity_type === "Process" ? "processo" : l.entity_type === "Action" ? "ação" : "item"}</div>
     `).join("") || `<div class="notif-item">Nenhuma atividade recente.</div>`;
     dropdown.dataset.loaded = "true";
   }
@@ -122,8 +123,8 @@ function renderProcesses(processes) {
   }
   processesBody.innerHTML = processes.map((p) => `
     <tr>
-      <td>${p.name}</td>
-      <td>${p.department || "—"}</td>
+      <td>${escapeHtml(p.name)}</td>
+      <td>${escapeHtml(p.department) || "—"}</td>
       <td>${STATUS_LABELS[p.status] || p.status}</td>
       <td>${p.priority}</td>
     </tr>
@@ -137,8 +138,8 @@ function renderRisks(risks) {
   }
   risksBody.innerHTML = risks.map((r) => `
     <tr>
-      <td>${r.description}</td>
-      <td>${r.category || "—"}</td>
+      <td>${escapeHtml(r.description)}</td>
+      <td>${escapeHtml(r.category) || "—"}</td>
       <td><span class="badge badge--${r.severity || "media"}">${({baixa:"Baixa",media:"M\u00e9dia",alta:"Alta",critica:"Cr\u00edtica"}[r.severity] || r.severity || "—").toUpperCase()}</span></td>
       <td>${STATUS_LABELS[r.status] || r.status}</td>
     </tr>

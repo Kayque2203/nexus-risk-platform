@@ -1,3 +1,4 @@
+import { escapeHtml } from "../utils/escape.js";
 import { getToken, clearToken, getCurrentUser, listProcesses, createProcess, updateProcess, deleteProcess } from "../api/client.js";
 import { renderSidebar } from "./sidebar.js";
 
@@ -61,8 +62,8 @@ function renderTable(processes) {
 
   tableBody.innerHTML = processes.map((p) => `
     <tr>
-      <td><a href="process-detail.html?id=${p.id}" style="color:inherit;">${p.name}</a></td>
-      <td>${p.department || "—"}</td>
+      <td><a href="process-detail.html?id=${p.id}" style="color:inherit;">${escapeHtml(p.name)}</a></td>
+      <td>${escapeHtml(p.department) || "—"}</td>
       <td>${STATUS_LABELS[p.status] || p.status}</td>
       <td>${p.priority}</td>
       <td>

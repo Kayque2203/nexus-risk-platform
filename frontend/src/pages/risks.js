@@ -1,3 +1,4 @@
+import { escapeHtml } from "../utils/escape.js";
 import { getToken, clearToken, getCurrentUser, listRisks, createRisk, updateRisk, deleteRisk, listAllProcessesForSelect } from "../api/client.js";
 import { renderSidebar } from "./sidebar.js";
 
@@ -54,7 +55,7 @@ let availableProcesses = [];
 
 function populateProcessSelect() {
   processSelect.innerHTML = availableProcesses
-    .map((p) => `<option value="${p.id}">${p.name}</option>`)
+    .map((p) => `<option value="${p.id}">${escapeHtml(p.name)}</option>`)
     .join("");
 }
 
@@ -94,8 +95,8 @@ function renderTable(risks) {
 
   tableBody.innerHTML = risks.map((r) => `
     <tr>
-      <td><a href="risk-detail.html?id=${r.id}" style="color:inherit;">${r.description}</a></td>
-      <td>${r.category || "—"}</td>
+      <td><a href="risk-detail.html?id=${r.id}" style="color:inherit;">${escapeHtml(r.description)}</a></td>
+      <td>${escapeHtml(r.category) || "—"}</td>
       <td><span class="badge badge--${r.severity || "media"}">${({baixa:"Baixa",media:"M\u00e9dia",alta:"Alta",critica:"Cr\u00edtica"}[r.severity] || r.severity || "—").toUpperCase()}</span></td>
       <td>${STATUS_LABELS[r.status] || r.status}</td>
       <td>
