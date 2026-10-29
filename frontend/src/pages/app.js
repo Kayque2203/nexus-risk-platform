@@ -106,7 +106,7 @@ function renderSeverityChart(risksBySeverity) {
     const widthPercent = Math.round((count / maxValue) * 100);
     return `
       <div class="chart-row">
-        <div class="chart-row__label">${level}</div>
+        <div class="chart-row__label">${({baixa:"Baixa",media:"M\u00e9dia",alta:"Alta",critica:"Cr\u00edtica"}[level] || level)}</div>
         <div class="chart-row__track">
           <div class="chart-row__fill chart-row__fill--${level}" style="width: ${widthPercent}%"></div>
         </div>
