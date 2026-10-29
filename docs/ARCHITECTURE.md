@@ -203,6 +203,15 @@ sequenceDiagram
 
 A análise é um endpoint independente: criar um risco não a dispara. Toda análise é persistida na tabela `ai_analyses`. A automação por webhooks (Teams, Power Automate) continua no roadmap e não faz parte do fluxo atual.
 
+### 5.3 Exclusão de risco e de processo
+
+As regras ficam no service; o router apenas traduz o resultado em HTTP.
+
+- **Risco:** `RiskService.delete_risk` apaga primeiro as ações vinculadas, registrando cada uma na auditoria (`audit.log_delete`), e só então exclui o risco. A resposta é 204.
+- **Processo:** `ProcessService.delete_process` levanta `ValueError` se houver riscos vinculados; o router `processes.py` converte o erro em **HTTP 409** com a mensagem "Processo possui riscos vinculados. Exclua os riscos antes de excluir o processo.". Nada é apagado em cascata.
+
+Os dois comportamentos possuem teste automatizado (`test_delete_risk_with_actions_deletes_actions_too` e `test_delete_process_with_risks_returns_409`).
+
 ## 6. Banco de dados e migração SQLite → PostgreSQL
 
 A migração está concluída. O desenvolvimento local usa SQLite (`sqlite:///./nexus.db`) e a produção usa PostgreSQL no Neon (região São Paulo). A troca se resume à variável `DATABASE_URL`, que em PostgreSQL usa o prefixo `postgresql+psycopg://`.

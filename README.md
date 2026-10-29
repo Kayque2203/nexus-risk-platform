@@ -244,6 +244,8 @@ Documentação completa e interativa em `/docs` (Swagger UI).
 | GET          | `/api/audit-logs/`    | Trilha de auditoria              |
 | POST         | `/api/ai/analyze`     | Análise de risco por texto (IA) |
 
+> **Regras de exclusão:** excluir um risco apaga também as ações vinculadas a ele (cada uma registrada na auditoria). Excluir um processo que ainda tem riscos retorna **HTTP 409** e não apaga nada; exclua os riscos antes.
+
 ## ☁️ Hospedagem
 
 | Componente | Serviço |
