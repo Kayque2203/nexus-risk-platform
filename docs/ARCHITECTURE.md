@@ -224,7 +224,7 @@ A migração está concluída. O desenvolvimento local usa SQLite (`sqlite:///./
 - O frontend escolhe a URL da API pelo hostname (`src/api/client.js`): `localhost` e `127.0.0.1` usam o backend local, qualquer outro host usa o backend publicado.
 - O CORS é configurável pela variável `CORS_ORIGINS` (lista separada por vírgulas, sem espaços e sem barra final).
 - Segredos (`SECRET_KEY`, `DATABASE_URL`) existem apenas como variáveis de ambiente e nunca são versionados.
-- O CI (GitHub Actions) roda os 41 testes a cada push. O deploy no Render é automático a cada push na `main`.
+- O CI (GitHub Actions) roda os 43 testes a cada push. O deploy no Render é automático a cada push na `main`.
 - **Cold start:** no plano Free o backend hiberna após cerca de 15 minutos sem acesso, e a primeira requisição leva de 30 a 60 segundos.
 
 ## 8. Riscos e pontos de atenção conhecidos

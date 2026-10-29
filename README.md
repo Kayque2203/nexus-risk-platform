@@ -95,15 +95,7 @@ Este projeto foi desenvolvido em um **ambiente corporativo com restrições reai
 - **AI Risk Analyzer**: análise de texto livre para sugestão automática de categoria, probabilidade, impacto e severidade — arquitetura desacoplada de qualquer API externa de IA, com fallback seguro
 - Dashboard com indicadores (processos ativos, atrasados, riscos críticos) e badges visuais de severidade
 - Trilha de auditoria (quem, quando, o quê mudou) para toda ação de escrita
-- 41 testes automatizados (unitários e de integraçã
-- Autenticação JWT com hash de senha (bcrypt)
-- CRUD completo de Processos (nome, categoria, departamento, status, prioridade, prazo)
-- CRUD completo de Riscos, vinculados a processos
-- **Risk Engine**: cálculo automático de severidade via matriz Probabilidade × Impacto (baseada em princípios da ISO 31000)
-- Recálculo automático de severidade ao atualizar probabilidade/impacto
-- Dashboard com indicadores (processos ativos, atrasados, riscos críticos) e badges visuais de severidade
-- Trilha de auditoria (quem, quando, o quê mudou) para toda ação de escrita
-- 29 testes automatizados (unitários e de integração)
+- 43 testes automatizados (unitários e de integração)
 
 ## 🛠️ Stack técnica
 
@@ -234,7 +226,7 @@ cd backend
 python -m pytest -v
 ```
 
-São 41 testes automatizados (autenticação, processos, riscos e análise de IA), executados a cada push pelo GitHub Actions. Cobrem CRUD, regras de negócio (e-mail duplicado, processo inexistente) e a matriz completa do Risk Engine via `@pytest.mark.parametrize`. Os testes usam um SQLite isolado, independente do `.env`.
+São 43 testes automatizados (autenticação, processos, riscos e análise de IA), executados a cada push pelo GitHub Actions. Cobrem CRUD, regras de negócio (e-mail duplicado, processo inexistente) e a matriz completa do Risk Engine via `@pytest.mark.parametrize`. Os testes usam um SQLite isolado, independente do `.env`.
 
 Documentação completa e interativa em `/docs` (Swagger UI).
 
@@ -267,6 +259,7 @@ Documentação completa e interativa em `/docs` (Swagger UI).
 - O cadastro de usuários (`POST /api/users/`) é público, escolha consciente para um projeto de portfólio. Em um cenário real seria restrito a administradores.
 - O JWT fica em `localStorage` e o logout é apenas no cliente (trade-off do modelo stateless).
 - A autorização é binária (autenticado ou não): o campo `role` existe, mas ainda não é aplicado.
+- O frontend escapa o texto vindo da API (escapeHtml, em rontend/src/utils/escape.js) antes de interpolá-lo em innerHTML, prevenindo XSS armazenado. Os demais pontos de HTML dinâmico usam apenas valores controlados pelo servidor (IDs e enums).
 - Todos os dados da demonstração são sintéticos.
 
 ## 🗺️ Roadmap
@@ -275,7 +268,7 @@ Documentação completa e interativa em `/docs` (Swagger UI).
 - [ ] Copiloto conversacional sobre os dados
 - [ ] Automação via webhooks (Teams, Power Automate)
 - [ ] Exportação de relatórios (CSV, Excel, PDF)
-- [x] CI via GitHub Actions (41 testes a cada push)
+- [x] CI via GitHub Actions (43 testes a cada push)
 - [ ] Validar o Docker Compose (escrito, ainda não testado em ambiente com Docker)
 - [x] PostgreSQL em produção (Neon)
 - [ ] Portar frontend para React + TypeScript + Vite (atualmente vanilla JS por restrição de ambiente)
