@@ -103,7 +103,7 @@ Este projeto foi desenvolvido em um **ambiente corporativo com restrições reai
 
 **Frontend:** HTML5, CSS3, JavaScript (ES Modules) — sem framework/bundler
 
-**Banco de dados:** SQLite (desenvolvimento), com caminho de migração para PostgreSQL
+**Banco de dados:** SQLite (desenvolvimento local) e PostgreSQL no Neon (produção)
 
 **Testes:** pytest, httpx, pytest-cov
 
@@ -261,7 +261,7 @@ Documentação completa e interativa em `/docs` (Swagger UI).
 - O cadastro de usuários (`POST /api/users/`) é público, escolha consciente para um projeto de portfólio. Em um cenário real seria restrito a administradores.
 - O JWT fica em `localStorage` e o logout é apenas no cliente (trade-off do modelo stateless).
 - A autorização é binária (autenticado ou não): o campo `role` existe, mas ainda não é aplicado.
-- O frontend escapa o texto vindo da API (escapeHtml, em rontend/src/utils/escape.js) antes de interpolá-lo em innerHTML, prevenindo XSS armazenado. Os demais pontos de HTML dinâmico usam apenas valores controlados pelo servidor (IDs e enums).
+- O frontend escapa o texto vindo da API (`escapeHtml`, em `frontend/src/utils/escape.js`) antes de interpolá-lo em `innerHTML`, prevenindo XSS armazenado. Os demais pontos de HTML dinâmico usam apenas valores controlados pelo servidor (IDs e enums).
 - Todos os dados da demonstração são sintéticos.
 
 ## 🗺️ Roadmap
