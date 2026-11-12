@@ -1,5 +1,5 @@
 import uuid
-from datetime import datetime
+from app.core.clock import utc_now
 
 from sqlalchemy import Column, String, Boolean, DateTime
 from app.db.base_class import Base
@@ -19,5 +19,5 @@ class User(Base):
     role = Column(String, nullable=False, default="user")
     department = Column(String, nullable=True)
     is_active = Column(Boolean, default=True)
-    created_at = Column(DateTime, default=datetime.utcnow)
-    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+    created_at = Column(DateTime, default=utc_now)
+    updated_at = Column(DateTime, default=utc_now, onupdate=utc_now)

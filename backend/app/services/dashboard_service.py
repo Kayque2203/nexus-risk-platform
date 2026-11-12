@@ -1,4 +1,4 @@
-﻿from datetime import datetime
+from app.core.clock import utc_now
 from sqlalchemy.orm import Session
 
 from app.repositories.process_repository import ProcessRepository
@@ -21,7 +21,7 @@ class DashboardService:
     def get_stats(self) -> dict:
         processes = self.process_repo.list_all(limit=10000)
         risks = self.risk_repo.list_all(limit=10000)
-        now = datetime.utcnow()
+        now = utc_now()
 
         overdue_processes = sum(
             1 for p in processes
