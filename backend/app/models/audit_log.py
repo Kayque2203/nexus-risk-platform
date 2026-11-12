@@ -1,5 +1,5 @@
-﻿import uuid
-from datetime import datetime
+import uuid
+from app.core.clock import utc_now
 
 from sqlalchemy import Column, String, Text, DateTime, ForeignKey
 from sqlalchemy.orm import relationship
@@ -30,4 +30,4 @@ class AuditLog(Base):
     # "status: aberto -> em_andamento"
     changes = Column(Text, nullable=True)
 
-    created_at = Column(DateTime, default=datetime.utcnow)
+    created_at = Column(DateTime, default=utc_now)

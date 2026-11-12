@@ -1,5 +1,5 @@
-﻿import uuid
-from datetime import datetime
+import uuid
+from app.core.clock import utc_now
 
 from sqlalchemy import Column, String, Text, DateTime, ForeignKey
 from sqlalchemy.orm import relationship
@@ -36,5 +36,5 @@ class Risk(Base):
     status = Column(String, nullable=False, default="aberto")
     due_date = Column(DateTime, nullable=True)
 
-    created_at = Column(DateTime, default=datetime.utcnow)
-    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+    created_at = Column(DateTime, default=utc_now)
+    updated_at = Column(DateTime, default=utc_now, onupdate=utc_now)

@@ -1,5 +1,5 @@
-﻿import uuid
-from datetime import datetime
+import uuid
+from app.core.clock import utc_now
 
 from sqlalchemy import Column, String, Text, DateTime
 from app.db.base_class import Base
@@ -20,4 +20,4 @@ class AIAnalysis(Base):
     severity = Column(String, nullable=False)
     reason = Column(Text, nullable=False)
     recommended_action = Column(Text, nullable=False)
-    created_at = Column(DateTime, default=datetime.utcnow)
+    created_at = Column(DateTime, default=utc_now)
