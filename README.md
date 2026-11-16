@@ -114,20 +114,24 @@ nexus/
 ├── backend/
 │   ├── app/
 │   │   ├── main.py
-│   │   ├── core/          # configurações, segurança/JWT
+│   │   ├── core/          # configurações, segurança/JWT, relógio UTC
 │   │   ├── db/             # engine, sessão, base do SQLAlchemy
-│   │   ├── models/         # entidades (User, Process, Risk, AuditLog)
+│   │   ├── models/         # entidades (User, Process, Risk, Action, AuditLog, AIAnalysis)
 │   │   ├── schemas/        # validação Pydantic
 │   │   ├── repositories/   # acesso a dados
-│   │   ├── services/       # regras de negócio (inclui o Risk Engine)
+│   │   ├── services/       # regras de negócio (Risk Engine; ai/ tem o analisador de IA)
 │   │   └── api/v1/         # rotas HTTP
 │   ├── tests/
 │   └── alembic/            # migrations versionadas
 ├── frontend/
 │   ├── index.html          # login
 │   ├── app.html            # dashboard
-│   ├── processes.html
-│   ├── risks.html
+│   ├── processes.html      # lista de processos
+│   ├── process-detail.html # detalhe do processo
+│   ├── risks.html          # lista de riscos
+│   ├── risk-detail.html    # detalhe do risco e ações de mitigação
+│   ├── ai-analyzer.html    # análise de risco por texto
+│   ├── audit.html          # histórico de auditoria
 │   └── src/
 │       ├── api/            # cliente HTTP
 │       ├── pages/          # lógica de cada tela
