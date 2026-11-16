@@ -120,3 +120,25 @@ def test_severity_always_matches_risk_engine(text):
 def test_reason_mentions_attenuators_only_when_present():
     assert "Atenuantes" not in analyze("Texto neutro sem indicadores especiais.").reason
     assert "Atenuantes" in analyze("Atraso pontual no setor.").reason
+
+# ---------- Seguranca: controle e revisao de acessos ----------
+
+def test_access_review_gap_is_classified_as_security():
+    result = analyze(
+        "N\u00e3o houve incidente de seguran\u00e7a, mas o acesso ao sistema "
+        "n\u00e3o possui revis\u00e3o peri\u00f3dica de usu\u00e1rios."
+    )
+    assert result.category == "Seguran\u00e7a"
+    assert result.probability == "media"
+    assert result.impact == "media"
+    assert result.severity == "media"
+
+
+@pytest.mark.parametrize("text", [
+    "A empresa n\u00e3o faz revis\u00e3o de acessos dos usu\u00e1rios.",
+    "Falta controle de acesso aos arquivos da qualidade.",
+    "Segrega\u00e7\u00e3o de fun\u00e7\u00f5es inexistente no sistema.",
+    "Gest\u00e3o de acessos sem respons\u00e1vel definido.",
+])
+def test_access_control_terms_are_classified_as_security(text):
+    assert analyze(text).category == "Seguran\u00e7a"

@@ -1,4 +1,4 @@
-﻿import re
+import re
 import unicodedata
 
 from app.services.ai.analyzer_interface import AIAnalyzer, AIAnalysisResult
@@ -21,6 +21,8 @@ CATEGORY_KEYWORDS = {
         "hacker", "senha", "phishing", "malware", "planilhas compartilhadas",
         "login compartilhado", "usuario generico", "perfil de acesso",
         "criptografia", "engenharia social",
+        "revisao periodica de usuario", "revisao de acesso", "controle de acesso",
+        "gestao de acesso", "segregacao de funcoes",
     ],
     "Financeiro": [
         "prejuizo", "perda financeira", "multa", "pagamento indevido",
