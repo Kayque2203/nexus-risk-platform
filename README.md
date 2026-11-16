@@ -60,7 +60,7 @@ flowchart TD
     end
 
     subgraph Data["Persistência"]
-        DB[(SQLite via SQLAlchemy)]
+        DB[(SQLite local / PostgreSQL Neon via SQLAlchemy)]
     end
 
     UI -- fetch/JSON --> API
@@ -83,7 +83,7 @@ Este projeto foi desenvolvido em um **ambiente corporativo com restrições reai
 
 - **Backend em Python/FastAPI** (não Node/NestJS) — único runtime confirmado disponível
 - **Frontend sem build step** (HTML/CSS/JS puro com ES Modules, servido via `python -m http.server`) — sem depender de Node/npm
-- **SQLite com SQLAlchemy + Alembic** — abstração que permite migrar para PostgreSQL trocando apenas a connection string
+- **SQLAlchemy + Alembic (SQLite local, PostgreSQL no Neon em produção)** — abstração que permite migrar para PostgreSQL trocando apenas a connection string
 
 ## ✨ Funcionalidades
 
@@ -109,55 +109,33 @@ Este projeto foi desenvolvido em um **ambiente corporativo com restrições reai
 
 ## 📦 Estrutura do projeto
 
+```text
 nexus/
-
 ├── backend/
-
 │   ├── app/
-
 │   │   ├── main.py
-
 │   │   ├── core/          # configurações, segurança/JWT
-
 │   │   ├── db/             # engine, sessão, base do SQLAlchemy
-
 │   │   ├── models/         # entidades (User, Process, Risk, AuditLog)
-
 │   │   ├── schemas/        # validação Pydantic
-
 │   │   ├── repositories/   # acesso a dados
-
 │   │   ├── services/       # regras de negócio (inclui o Risk Engine)
-
 │   │   └── api/v1/         # rotas HTTP
-
 │   ├── tests/
-
 │   └── alembic/            # migrations versionadas
-
 ├── frontend/
-
 │   ├── index.html          # login
-
 │   ├── app.html            # dashboard
-
 │   ├── processes.html
-
 │   ├── risks.html
-
 │   └── src/
-
 │       ├── api/            # cliente HTTP
-
 │       ├── pages/          # lógica de cada tela
-
 │       └── styles/
-
 └── docs/
-
-├── ARCHITECTURE.md
-
-└── screenshots/
+    ├── ARCHITECTURE.md
+    └── screenshots/
+```
 
 ## 🚀 Como executar
 

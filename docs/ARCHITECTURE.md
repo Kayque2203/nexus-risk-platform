@@ -203,6 +203,8 @@ sequenceDiagram
 
 A análise é um endpoint independente: criar um risco não a dispara. Toda análise é persistida na tabela `ai_analyses`. A automação por webhooks (Teams, Power Automate) continua no roadmap e não faz parte do fluxo atual.
 
+O `KeywordAnalyzer` (v2) casa termos pelo início da palavra e pontua em três eixos. **Categoria:** termos comuns pesam 1 e termos fortes (como integridade de dados, trilha de auditoria e vazamento) pesam 2; o desempate vai para a maior pontuação e depois para o maior número de termos fortes. **Probabilidade e impacto:** o padrão é médio; cada reforço sobe um nível (até dois) e qualquer atenuante (como "pontual", "isolado" ou "baixo impacto") desce um nível, então a severidade baixa só aparece quando há atenuantes. A severidade final vem do Risk Engine. **Negação:** palavras como "sem", "não" e "nunca" nas três palavras anteriores, dentro da mesma frase, anulam incidentes e intensificadores ("sem vazamento"), mas a falta de um controle ("sem trilha de auditoria") continua contando como risco. O formato do resultado (`AIAnalysisResult`) e a API não mudaram.
+
 ### 5.3 Exclusão de risco e de processo
 
 As regras ficam no service; o router apenas traduz o resultado em HTTP.
@@ -221,6 +223,7 @@ A migração está concluída. O desenvolvimento local usa SQLite (`sqlite:///./
 3. Não houve migração de dados: o banco de produção é populado pela própria API, com `backend/seed_demo.py` (dados sintéticos), de modo que a severidade vem do Risk Engine e a auditoria é registrada.
 4. `pool_pre_ping` e `pool_recycle=280` na sessão tratam conexões que o Neon derruba ao suspender o compute.
 5. Os testes usam um SQLite isolado (`test.db`), independente do `.env`.
+6. As datas gravadas pelo servidor vêm de `utc_now()` (`app/core/clock.py`), que devolve UTC sem fuso. Isso mantém a comparação com datas sem fuso (como o prazo das ações no dashboard) e evita o `datetime.utcnow()`, depreciado. O frontend trata essas datas como UTC.
 
 ## 7. Hospedagem e operação
 
@@ -241,6 +244,7 @@ A migração está concluída. O desenvolvimento local usa SQLite (`sqlite:///./
 - **Concorrência no SQLite:** limitação aceita, pois o SQLite é usado só no desenvolvimento local.
 - **Frontend sem build:** exige disciplina manual na organização dos módulos JS. Mitigado com ES Modules nativos; uma migração para React/Vite só fará sentido se o ambiente permitir.
 - **IA por palavras-chave:** o `KeywordAnalyzer` é uma heurística atrás da interface `AIAnalyzer`, então pode ser trocado por um modelo real sem mudar os services. Roda no mesmo processo da API, uma adaptação de ambiente e não uma limitação de design.
+- **Limites do analisador:** a janela de negação é de 3 palavras (frases longas escapam), "baixa criticidade" ainda soma como reforço de `critic` e o vocabulário foca qualidade, compliance e validação de sistemas computadorizados.
 - **Cadastro público:** `POST /api/users/` não exige autenticação. É uma escolha consciente para o portfólio e seria restrito em um cenário real.
 - **Autorização binária:** o campo `role` existe, mas não é verificado.
 - **JWT em `localStorage`:** o logout é apenas no cliente (trade-off do modelo stateless).
