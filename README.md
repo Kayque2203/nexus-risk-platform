@@ -95,7 +95,7 @@ Este projeto foi desenvolvido em um **ambiente corporativo com restrições reai
 - **AI Risk Analyzer**: análise de texto livre para sugestão automática de categoria, probabilidade, impacto e severidade — arquitetura desacoplada de qualquer API externa de IA, com fallback seguro
 - Dashboard com indicadores (processos ativos, atrasados, riscos críticos) e badges visuais de severidade
 - Trilha de auditoria (quem, quando, o quê mudou) para toda ação de escrita
-- 62 testes automatizados (unitários e de integração)
+- 67 testes automatizados (unitários e de integração)
 
 ## 🛠️ Stack técnica
 
@@ -208,7 +208,7 @@ cd backend
 python -m pytest -v
 ```
 
-São 62 testes automatizados (autenticação, processos, riscos e análise de IA), executados a cada push pelo GitHub Actions. Cobrem CRUD, regras de negócio (e-mail duplicado, processo inexistente) e a matriz completa do Risk Engine via `@pytest.mark.parametrize`. Os testes usam um SQLite isolado, independente do `.env`.
+São 67 testes automatizados (autenticação, processos, riscos e análise de IA), executados a cada push pelo GitHub Actions. Cobrem CRUD, regras de negócio (e-mail duplicado, processo inexistente) e a matriz completa do Risk Engine via `@pytest.mark.parametrize`. Os testes usam um SQLite isolado, independente do `.env`.
 
 Documentação completa e interativa em `/docs` (Swagger UI).
 
@@ -252,7 +252,7 @@ Documentação completa e interativa em `/docs` (Swagger UI).
 - [ ] Copiloto conversacional sobre os dados
 - [ ] Automação via webhooks (Teams, Power Automate)
 - [ ] Exportação de relatórios (CSV, Excel, PDF)
-- [x] CI via GitHub Actions (62 testes a cada push)
+- [x] CI via GitHub Actions (67 testes a cada push)
 - [ ] Validar o Docker Compose (escrito, ainda não testado em ambiente com Docker)
 - [x] PostgreSQL em produção (Neon)
 - [ ] Portar frontend para React + TypeScript + Vite (atualmente vanilla JS por restrição de ambiente)
